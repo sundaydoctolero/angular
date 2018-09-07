@@ -1,0 +1,27 @@
+nav{
+    height: 40px;
+}
+.bg-light{
+    background-color: #191919 !important;
+}
+.navbar-brand {
+    color: white !important;
+    font-size: 18px;
+}
+
+.nav{
+    background: #36d900;
+}
+
+a{
+    border-radius: 0 0 0 0;
+    color: white;
+}
+
+.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+    color: #fff;
+    background-color: #01580f;
+    border-radius: 0 0 0 0;
+}
+
+

@@ -7,6 +7,9 @@ import { AfterLoginService } from './services/after-login.service';
 import { BeforeLoginService } from './services/before-login.service';
 import { RequestResetComponent } from './components/password/request-reset/request-reset.component';
 import { ResponseResetComponent } from './components/password/response-reset/response-reset.component';
+import { DataentryComponent } from './components/dataentry/dataentry.component';
+import { PublicationLoginComponent } from './components/publication-login/publication-login.component';
+import { ViewPropertiesComponent } from './components/view-properties/view-properties.component';
 
 
 const appRoutes : Routes = [
@@ -40,6 +43,24 @@ const appRoutes : Routes = [
   canActivate: [BeforeLoginService]
 },
 
+{
+  path: 'dataentry',
+  component: DataentryComponent,
+  canActivate: [AfterLoginService]
+},
+
+{
+  path: 'view',
+  component: ViewPropertiesComponent,
+  canActivate: [AfterLoginService]
+},
+
+
+{
+  path: 'publication-login',
+  component: PublicationLoginComponent,
+  canActivate: [AfterLoginService]
+},
 
 ];
 

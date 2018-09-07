@@ -32,7 +32,6 @@ export class RequestResetComponent implements OnInit {
   handleResponse(res){
     this.notify.success(res.data,{timeout:0});
     this.form.email == null;
-
   }
 
 }

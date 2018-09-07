@@ -27,4 +27,7 @@ export class JarwisService {
     return this.http.post(this.baseUrl+'/resetPassword',data);
   }
 
+  profile(user,token){
+    return this.http.get(this.baseUrl + '/profile/' + user.id +'?token='+ token);
+  }
 }

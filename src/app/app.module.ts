@@ -13,6 +13,14 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule}  from '@angular/common/http';
 import { HttpModule} from '@angular/http';
 import { SnotifyModule, SnotifyService, ToastDefaults } from 'ng-snotify';
+import { DataentryComponent } from './components/dataentry/dataentry.component';
+import { SaleRentDetailsComponent } from './components/sale-rent-details/sale-rent-details.component';
+import { PropertyDetailsComponent } from './components/property-details/property-details.component';
+import { AgentDetailsComponent } from './components/agent-details/agent-details.component';
+import { PublicationLoginComponent } from './components/publication-login/publication-login.component';
+import { BsDatepickerModule} from 'ngx-bootstrap/datepicker';
+import { FooterComponent } from './components/footer/footer.component';
+import { ViewPropertiesComponent } from './components/view-properties/view-properties.component';
 
 
 
@@ -24,14 +32,23 @@ import { SnotifyModule, SnotifyService, ToastDefaults } from 'ng-snotify';
     SignupComponent,
     ProfileComponent,
     RequestResetComponent,
-    ResponseResetComponent
+    ResponseResetComponent,
+    DataentryComponent,
+    SaleRentDetailsComponent,
+    PropertyDetailsComponent,
+    AgentDetailsComponent,
+    PublicationLoginComponent,
+    FooterComponent,
+    ViewPropertiesComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
-    SnotifyModule
+    SnotifyModule,
+    BsDatepickerModule.forRoot()
+    
   ],
   providers: [
     { provide: 'SnotifyToastConfig', useValue: ToastDefaults},
@@ -39,4 +56,7 @@ import { SnotifyModule, SnotifyService, ToastDefaults } from 'ng-snotify';
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule { 
+
+  
+}

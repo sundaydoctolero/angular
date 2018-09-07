@@ -10,7 +10,10 @@ import { SnotifyService } from 'ng-snotify';
 })
 export class ResponseResetComponent implements OnInit {
 
-  public error = [];
+  public error = {
+    email: null,
+    password: null
+  };
 
   public form = {
     'email' : null,
@@ -25,7 +28,6 @@ export class ResponseResetComponent implements OnInit {
     private router : Router,
     private Notify : SnotifyService
   ) { 
-
     route.queryParams.subscribe(params=>{
       this.form.resetToken = params['token']
     })

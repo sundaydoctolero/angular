@@ -1,0 +1,47 @@
+<div class="form-group row">
+    <label for="listing_type" class="col-2 col-form-label text-right">Listing Type</label>
+    <div class="col-4 input-div">
+        <select name="listing_type" class="custom-select custom-select-sm" id="listing_type" name="listing_type" [(ngModel)]="form.listing_type"> 
+          <option value="S">Normal Sale</option>
+          <option value="A">Auction</option>
+          <option>Mortgagee Sale</option>
+          <option>Mortgagee Auction</option>
+          <option>Tender</option>
+          <option>Other</option>
+        </select>
+    </div>
+    <label for="auction_tender_date" class="col-2 offset-1 col-form-label text-right"><small>Auction/TenderDate</small></label>
+    <div class="col-3 input-div">
+        <input type="text" class="form-control form-control-sm" id="auction_tender_date" name="auction_tender_date" />
+    </div>
+</div>
+
+<div class="form-group row">
+    <label for="price_from" class="col-2 col-form-label text-right">Price From</label>
+    <div class="col-3 input-div">
+        <input type="text" class="form-control form-control-sm" id="price_from" name="price_from" [(ngModel)]="form.price_from"/>
+    </div>
+    <label for="auction_tender_time" class="col-2 offset-2 col-form-label text-right"><small>Auction/TenderTime</small></label>
+    <div class="col-3 input-div">
+        <input type="text" class="form-control form-control-sm" id="auction_tender_time" name="auction_tender_time" />
+    </div>
+</div>
+
+<div class="form-group row">
+    <label for="price_to" class="col-2 col-form-label text-right">Price To</label>
+    <div class="col-3 input-div">
+        <input type="text" class="form-control form-control-sm" id="price_to" name="price_to" />
+    </div>
+    <label for="auction_venue" class="col-2 col-form-label text-right"><small>Auction Venue</small></label>
+    <div class="col-5 auction_venue input-div">
+        <input type="text" class="form-control form-control-sm" id="auction_venue" name="auction_venue" />
+    </div>
+</div>
+
+<div class="form-group row">
+    <label for="price_description" class="col-2 col-form-label text-right">Price Desc.</label>
+    <div class="col-10 input-div">
+        <input type="text" class="form-control form-control-sm" id="price_description"price_description name="price_description" />
+    </div>
+</div>
+  

@@ -1,6 +1,17 @@
 /* You can add global styles to this file, and also import other style files */
-@import '~bootstrap/dist/css/bootstrap.css';
 @import '~ng-snotify/styles/material.css';
+
+
+@media (max-width: 576px) { 
+
+}
+
+@media (min-width: 900px) { 
+    .container-fluid{
+        padding-left: 20%;    
+        padding-right: 20%;
+    }
+}
 
 
 .ng-invalid:not(form){
@@ -14,3 +25,15 @@
 .ng-touch:not(form){
     border: 5px solid green;
 }
+
+
+
+
+
+
+
+
+
+
+
+

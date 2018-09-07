@@ -27,8 +27,16 @@ export class NavbarComponent implements OnInit {
     event.preventDefault();
     this.Auth.changeAuthStatus(false);
     this.Token.remove();
+    this.removeUser();
     this.router.navigateByUrl('/login');
   }
+
+  removeUser(){
+    localStorage.removeItem('user');
+  }
+
+ 
+
 
 
 }

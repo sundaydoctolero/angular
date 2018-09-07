@@ -40,10 +40,15 @@ export class LoginComponent implements OnInit {
   handleResponse(data){
     this.Token.handleToken(data.access_token);
     this.Auth.changeAuthStatus(true);
+    this.setUser(data);
     this.router.navigateByUrl('/profile');
   }
 
   ngOnInit() {
+  }
+
+  setUser(data){
+    localStorage.setItem('user',JSON.stringify(data.user));
   }
 
 }

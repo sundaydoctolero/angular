@@ -17,7 +17,10 @@ export class SignupComponent implements OnInit {
     password_confirmation: null,
   };
 
-  public error = [];
+  public error = {
+    email: null,
+    password: null
+  };
 
   constructor(
     private Jarwis: JarwisService,
@@ -38,6 +41,7 @@ export class SignupComponent implements OnInit {
   }
 
   handleError(error){
+    console.log(error);
     this.error = error.error;
   }
   
