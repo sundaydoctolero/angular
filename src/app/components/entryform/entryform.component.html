@@ -61,7 +61,7 @@
         <div class="form-group row">
           <label for="suburb" class="col-2 col-form-label text-right" [class.has-error]="suburb.invalid && suburb.touched">Suburb</label>
           <div class="col-4 input-div">
-            <input type="text" formControlName="Suburb" class="form-control form-control-sm" required>
+            <input type="text" formControlName="Suburb" class="form-control form-control-sm" required (blur)="getSuburb()">
           </div>
           <div class="col-2 input-div">
             <input type="text" formControlName="PostCode" class="form-control form-control-sm" pattern="[0-9]{4}"
@@ -597,10 +597,30 @@
         </div>
       </div>
 
-      <div class="mt-3 mb-5">
-        <div class="form-group row mt-5">
+      <div class="">
+          <div class="form-group row mt-5">
+              <div class="col input-div">
+                <label for="Ad_Size" class="text-center m-0 d-block">Ad Size</label>
+              </div>
+    
+              <div class="col input-div">
+                <label for="Ad_Photo_Type" class="text-center m-0 d-block">Ad Photo Type</label>
+              </div>
+    
+              <div class="col input-div">
+                <label for="Ad_Photo_Count" class="text-center m-0 d-block">Ad Photo Count</label>
+              </div>
+    
+              <div class="col input-div">
+                <label for="Ad_Section" class="text-center m-0 d-block">Ad Section</label>
+              </div>
+    
+              <div class="col input-div">
+                <label for="Ad_Exclusive" class="text-center m-0 d-block">Ad Exclusive Agent</label>
+              </div>
+            </div>
+        <div class="form-group row mb-5">
           <div class="col input-div">
-            <label for="Ad_Size" class="text-center m-0">Ad Size</label>
             <select formControlName="Ad_Size" class="custom-select custom-select-sm" #input101 (change)="generate()">
               <option value=""> -- </option>
               <option value="CLASSIFIEDS">Classifieds</option>
@@ -616,7 +636,6 @@
           </div>
 
           <div class="col input-div">
-            <label for="Ad_Photo_Type" class="text-center m-0">Ad Photo Type</label>
             <select formControlName="Ad_Photo_Type" class="custom-select custom-select-sm" (change)="generate2()">
               <option value="COLOUR">Colour</option>
               <option value="B & W">B & W</option>
@@ -625,7 +644,6 @@
           </div>
 
           <div class="col input-div">
-            <label for="Ad_Photo_Count" class="text-center m-0">Ad Photo Count</label>
             <select formControlName="Ad_Photo_Count" class="custom-select custom-select-sm">
               <option value="SINGLE">Single</option>
               <option value="MULTIPLE">Multiple</option>
@@ -634,7 +652,6 @@
           </div>
 
           <div class="col input-div">
-            <label for="Ad_Section" class="text-center m-0">Ad Section</label>
             <select formControlName="Ad_Section" class="custom-select custom-select-sm">
                 <option value=""> -- </option>
               <option value="FRONT">Front</option>
@@ -645,7 +662,6 @@
           </div>
 
           <div class="col input-div">
-            <label for="Ad_Exclusive" class="text-center m-0">Ad Exclusive Agent</label>
             <select formControlName="Ad_Exclusive" class="custom-select custom-select-sm">
               <option value="YES">Yes</option>
               <option value="NO">No</option>
@@ -670,14 +686,18 @@
             <div class="col input-div">
               <input type="text" class="form-control form-control-sm" formControlName="Agent_Surname" placeholder="Surname">
             </div>
+            <div class="col input-div">
+                <button (click)="deleteAgent(i)" type="button" class="btn btn-danger btn-sm" *ngIf="! i == 0">Delete Agent</button>
+                <button (click)="addAgent()" type="button" class="btn btn-primary btn-sm" *ngIf=" i == 0">Add Agent</button>
+            </div>
           </div>
         </div>
       </div>
 
-      <button (click)="addAgent()" type="button" class="btn btn-primary btn-sm">Add Agent</button>
+      
 
       <div class="form-group row mt-3">
-        <div class="col-6 input-div offset-2">
+        <div class="col">
           <button type="submit" class="btn btn-primary btn-sm btn-block" [disabled]="propertyForm.invalid">Submit</button>
         </div>
       </div>

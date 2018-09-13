@@ -13,6 +13,8 @@ export class ViewPropertiesComponent implements OnInit {
 
   public properties: Property[];
 
+  public panelExpanded: boolean = true;
+
   constructor(
     private _properties: PropertyService,
     private Au: AuServiceService,
@@ -31,5 +33,7 @@ export class ViewPropertiesComponent implements OnInit {
   handleProperties(properties){
     this.properties = properties.data;
   }
+
+
 
 }

@@ -10,6 +10,7 @@ import { PropertyAtrributeService } from '../../services/property-atrribute.serv
 import { PropertyFeatureService } from '../../services/property-feature.service';
 import { AuServiceService } from '../../services/au-service.service';
 import { Router } from '@angular/router';
+import { SuburbService } from '../../services/suburb.service';
 
 @Component({
   selector: 'app-entryform',
@@ -144,6 +145,7 @@ export class EntryformComponent implements OnInit {
     private _formPropAttributes: PropertyAtrributeService,
     private _formPropFeatures: PropertyFeatureService,
     private Au: AuServiceService, 
+    private PostCode: SuburbService,
     private _router: Router,
     ) {
     this.states = this._lookup.getStatesLkp();
@@ -155,12 +157,18 @@ export class EntryformComponent implements OnInit {
 
   send() {
     this.Au.saveProperty(this.propertyForm.value).subscribe(
-      data => console.log(data),
+      data => {
+        console.log(data);
+        this.unit.nativeElement.focus();
+        this.agents.controls.splice(0);
+        this.propertyForm = this.fb.group(this.form);
+        this.addAgent();
+      },
       error => console.log(error)
     );
+    
     this.show = false;
-    this.unit.nativeElement.focus();
-    this.propertyForm = this.fb.group(this.form);
+    
   }
 
   reset() {
@@ -171,6 +179,16 @@ export class EntryformComponent implements OnInit {
     return this.show = !this.show;
   }
 
+  getSuburb(){
+    this.PostCode.getPostCode(this.state.value,this.suburb.value).subscribe(
+      data=> this.setPostCode(data),
+      error => this.post_code.setValue("")
+    )
+  }
+
+  setPostCode(suburb){
+    this.post_code.setValue(suburb.data.Post_Code);
+  }
 
   hotkeys(e) {
     if ((e.keyCode) == 96 && e.ctrlKey) { // numpad 0
@@ -255,6 +273,14 @@ export class EntryformComponent implements OnInit {
     this.agents.push(this.createAgent());
   }
 
+
+  deleteAgent(index) {
+    console.log(index);
+    this.agents.removeAt(index);
+  }
+
+
+  
   checkAddress(){
     if(this.page_no.valid && this.street_no.valid && this.suburb.valid && this.post_code.valid){
       return false;

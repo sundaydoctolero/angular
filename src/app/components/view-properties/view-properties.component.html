@@ -1,21 +1,37 @@
 <div class="mt-4">
-  <div class="card text-white bg-dark" *ngFor="let property of properties; let count = index">
-    <div class="card-header row">
-      <div class="col">
-          <span>
-              {{ property.Street_No + " " + property.Street_Name + " " + property.Street_Extension + " " + property.Suburb }}
-          </span>
-      </div>
-      <div class="col">
-          <div class="input-group-append float-right">
-              <button class="btn btn-info btn-sm" type="button">View</button> 
-              <button class="btn btn-success btn-sm" type="button">Edit</button> 
-              <button class="btn btn-danger btn-sm" type="button">Delete</button> 
-          </div>
+  <div class="card text-white bg-info rounded-0" *ngFor="let property of properties; let count = index">
+    <div class="card-header p-0">
+       <span>
+          {{ property.Street_No + " " + property.Street_Name + " " + property.Street_Extension + " "
+          + property.Suburb + " " + property.PostCode + ", " + property.State + " " + property.Property_Type |
+          uppercase
+          }}
+        </span>
+      
+      <div class="btn-group btn-group-toggle float-right" data-toggle="buttons">
+        <label class="btn btn-success rounded-0 p-1">
+          <input type="radio" name="options" id="option2" autocomplete="off"> Edit
+        </label>
+        <label class="btn btn-danger rounded-0 p-1">
+          <input type="radio" name="options" id="option3" autocomplete="off"> Delete
+        </label>
       </div>
     </div>
-    <div class="card-body" hidden="true">
-      <span>sdlfjsdlf</span>
+    <div class="card-body">
+      <h5 class="card-title">
+        <span class="badge badge-success rounded-0">{{ property.Price_From != null ? property.Price_From : "" }}</span>
+        <span class="badge badge-success rounded-0">{{ property.Bedrooms != null ? property.Bedrooms + "Bed " : "" }}</span>
+        <span class="badge badge-success rounded-0">{{ property.Bathrooms != null ? property.Bathrooms + "Bath " : ""
+          }}</span>
+        <span class="badge badge-success rounded-0">{{ property.Lockup_Garages != null ? property.Lockup_Garages + "LUG
+          "
+          : "" }}</span>
+        <span class="badge badge-success rounded-0">{{ property.Car_Spaces != null ? property.Car_Spaces + "Car " : ""
+          }}</span>
+      </h5>
+      <p class="card-text" *ngFor="let agent of property.agents">{{ agent.Agency_Name + " " + agent.Agent_Contact |
+        uppercase }}</p>
     </div>
   </div>
 </div>
+
