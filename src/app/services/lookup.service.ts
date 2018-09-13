@@ -41,18 +41,10 @@ export class LookupService {
   ]
 
   private property_types: PropertyType[] = 
-  [{
-    code: "HO",
-    property_type: "House"
-  },{
-    code: "HO,10",
-    property_type: "House - One Storey / Lowset"
-  },{
-    code: "HO,20",
-    property_type: "House - Two Storey / Highset"
-  },{
-    code: "HO,50",
-    property_type: "House - Multi Storey"
+  [{ code: "HO",property_type: "House" },
+   { code: "HO,10", property_type: "House - One Storey / Lowset" },
+   { code: "HO,20", property_type: "House - Two Storey / Highset" },
+   { code: "HO,50", property_type: "House - Multi Storey"
   }, {
     code: "HO,60",
     property_type: "House - Office / Retail"
@@ -138,77 +130,28 @@ export class LookupService {
  ]
   
   private street_extensions: StreetExtension[] = [
-    {
-     code: "St" ,
-     street_extension: "Street"
-    },
-    {
-      code: "Rd" ,
-      street_extension: "Road"
-     },
-     {
-      code: "Hwy" ,
-      street_extension: "Highway"
-     },
-     {
-      code: "Ct" ,
-      street_extension: "Court"
-     },
-     {  
-       code: "Cr",
-       street_extension: "Crescent"
-     }
-
+    { code: "St", street_extension: "Street" },
+    { code: "Rd", street_extension: "Road" },
+    { code: "Hwy", street_extension: "Highway" },
+    { code: "Ct", street_extension: "Court" },
+    { code: "Cr", street_extension: "Crescent"},
   ]
  
   private street_directions: StreetDirection[] =[
-    {
-      code: "N",
-      street_direction: "North"
-    },
-    {
-      code: "S",
-      street_direction: "South"
-    },
-    {
-      code: "E",
-      street_direction: "East"
-    },
-    {
-      code: "W",
-      street_direction: "West"
-    }
+    { code: "N", street_direction: "North" },
+    { code: "S", street_direction: "South" },
+    { code: "E", street_direction: "East" },
+    { code: "W", street_direction: "West" }
   ]
   
   private listing_types: ListingType[] = [
-    {
-      code: "S",
-      listing_type: "Normal Sale"
-    },
-    {
-      code: "M",
-      listing_type: "Mortgagee Sale"
-    },
-    {
-      code: "MA",
-      listing_type: "Mortgagee Auction"
-    },
-    {
-      code: "T",
-      listing_type: "Tender"
-    },
-    {
-      code: "A",
-      listing_type: "Auction"
-    },
-    {
-      code: "R",
-      listing_type: "Rent"
-    },
-    {
-      code: "O",
-      listing_type: "Other"
-    },
+    { code: "S", listing_type: "Normal Sale" },
+    { code: "M", listing_type: "Mortgagee Sale" },
+    { code: "MA", listing_type: "Mortgagee Auction" },
+    { code: "T",  listing_type: "Tender" },
+    { code: "A",  listing_type: "Auction" },
+    { code: "R",  listing_type: "Rent" },
+    { code: "O",  listing_type: "Other" },
   ]
 
   constructor() { }

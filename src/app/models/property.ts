@@ -5,9 +5,8 @@ export class Property {
     Sequence_No?: number;
     State: string;
     Publication_Name: string;
-    Publication_Date: Date;
-    Data_Entry_Date: Date;
-    Date_Creation: Date;
+    
+    Date_Creation?: Date;
     
     Street_No: string; 
     Street_Name:  string;
@@ -66,6 +65,9 @@ export class Property {
     Ad_Photo_Count?: string;
     Ad_Section?: string;
     Ad_Exclusive?: string;
+
+    Publication_Date: Date;
+    Data_Entry_Date: Date;
 
 
 

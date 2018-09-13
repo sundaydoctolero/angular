@@ -9,9 +9,9 @@ import { StreetDirection } from '../../models/street-direction';
 import { ListingType } from '../../models/listing-type';
 import { SnotifyService } from 'ng-snotify';
 import { PropertyFeatureService } from '../../services/property-feature.service';
-import { PropertyFeature } from '../../models/property-feature';
-import { PropertyAttribute } from '../../models/property-attribute';
 import { PropertyAtrributeService } from '../../services/property-atrribute.service';
+import { Agent } from '../../models/agent';
+import { FormBuilder, FormGroup, FormArray } from '@angular/forms';
 
 @Component({
   selector: 'app-dataentry',
@@ -26,23 +26,38 @@ export class DataentryComponent implements OnInit {
   public street_directions: StreetDirection[];
   public listing_types: ListingType[];
 
-  /** Dynamic Form Features Field */
-  public formFeatures: PropertyFeature[];
-  public formAttributes: PropertyAttribute[];
 
   /**  */
   public showPropertyDetails: boolean = false;
   public showRentFields: boolean = false;
-  public showAdditional: boolean = false;
+  public showAdditional: boolean = true;
 
 
-  public Bedrooms: string = "2";
+  orderForm: FormGroup;
+  items: FormArray;
+
+
+  public Agents: Agent[] = [
+    {
+      Agency_Name: "LJ Hooker Real Estate",
+      Agent_Firstname: "Jennifer",
+      Agent_Surname: "Doctolero",
+      Agent_Contact: "0412 123 121",
+    },
+    {
+      Agency_Name: "Ray White Real Estate",
+      Agent_Firstname: "Sunday",
+      Agent_Surname: "Doctolero",
+      Agent_Contact: "0412 123 123",
+    },
+  ];
+
 
   public form: Property = {
     id: 1,
     Page_No: "1",
     State: "VIC",
-    Publication_Name: "Agent Booklet",
+    Publication_Name: "Agent Booklet - Ray White Real Estate",
     Publication_Date: new Date(),
 
     Street_No: "",
@@ -78,6 +93,7 @@ export class DataentryComponent implements OnInit {
     private Au: AuServiceService,
     private _formPropFeatures: PropertyFeatureService,
     private _formPropAttributes: PropertyAtrributeService,
+    private formBuilder: FormBuilder,
 
   ) { }
 
@@ -88,6 +104,10 @@ export class DataentryComponent implements OnInit {
     this.street_extensions = this._lookup.getStreetExtensionsLkp();
     this.street_directions = this._lookup.getStreetDirectionsLkp();
     this.listing_types = this._lookup.getListingTypesLkp();
+
+    this.showAdditional = true;
+    console.log(this.showAdditional);
+    alert(this.showAdditional);
   }
 
 
@@ -110,12 +130,10 @@ export class DataentryComponent implements OnInit {
   handleResponse(data) {
     this.form = data.data;
     this._notify.success("Property generated!");
-    this.formFeatures = this._formPropFeatures.getFormFeatures(this.form.Property_Type.substring(0, 2));
   }
 
   handleError(error) {
     this._notify.error(error.error.error);
-    this.formFeatures = this._formPropFeatures.getFormFeatures(this.form.Property_Type.substring(0, 2));
   }
 
 
@@ -138,5 +156,11 @@ export class DataentryComponent implements OnInit {
   showRentField() {
     return this.form.Sale_Rent == 'Rent' ? true : false;
   }
+
+  trackByIndex(index: number, obj: any): any {
+    return index;
+  }
+
+
 
 }

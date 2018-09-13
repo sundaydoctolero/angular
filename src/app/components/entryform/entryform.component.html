@@ -1,0 +1,694 @@
+<div class="row mt-5">
+  <div class="col-12">
+    <form [formGroup]="propertyForm" (ngSubmit)="send()">
+      <div [hidden]="show">
+        <div class="form-group row mb-1">
+          <label for="Page_No" class="col-2 col-form-label text-right" [class.has-error]="page_no.invalid && page_no.touched">Page
+            No.</label>
+          <div class="col-2 input-div">
+            <input type="text" class="form-control form-control-sm" formControlName="Page_No" required autofocus>
+          </div>
+          <small *ngIf="page_no.invalid && page_no.touched" class="form-text text-danger">**required</small>
+        </div>
+
+        <div class="form-group row">
+          <label for="State" class="col-2 col-form-label text-right" [class.has-error]="state.invalid && state.touched">State</label>
+          <div class="col-2 input-div">
+            <select formControlName="State" class="custom-select custom-select-sm" required>
+              <option *ngFor="let state of states" [value]="state.code">{{ state.code }}</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label for="Unit_No" class="col-2 col-form-label text-right">Unit No.</label>
+          <div class="col-2 input-div">
+            <input type="text" class="form-control form-control-sm" formControlName="Unit_No" #unit_no>
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label for="Street_No" class="col-2 col-form-label text-right" [class.has-error]="street_no.invalid && street_no.touched">Street
+            No</label>
+          <div class="col-2 input-div">
+            <input type="text" formControlName="Street_No" class="form-control form-control-sm" required>
+          </div>
+          <div class="col-1 input-div">
+            <input type="text" class="form-control form-control-sm" formControlName="Street_No_Suffix">
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label for="Street_Name" class="col-2 col-form-label text-right" [class.has-error]="street_name.invalid && street_name.touched">Street
+            Name</label>
+          <div class="col-5 input-div">
+            <input type="text" formControlName="Street_Name" class="form-control form-control-sm" required>
+          </div>
+          <div class="col-3 input-div">
+            <select formControlName="Street_Extension" class="custom-select custom-select-sm">
+              <option *ngFor="let extension of street_extensions" [value]="extension.street_extension">{{
+                extension.street_extension }}</option>
+            </select>
+          </div>
+          <div class="col-2 input-div">
+            <select formControlName="Street_Direction" class="custom-select custom-select-sm">
+              <option *ngFor="let direction of street_directions" [value]="direction.street_direction">{{
+                direction.street_direction }}</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label for="suburb" class="col-2 col-form-label text-right" [class.has-error]="suburb.invalid && suburb.touched">Suburb</label>
+          <div class="col-4 input-div">
+            <input type="text" formControlName="Suburb" class="form-control form-control-sm" required>
+          </div>
+          <div class="col-2 input-div">
+            <input type="text" formControlName="PostCode" class="form-control form-control-sm" pattern="[0-9]{4}"
+              required>
+          </div>
+        </div>
+
+        <div class="form-group row mb-1">
+          <label for="Property_Type" class="col-2 col-form-label text-right" [class.has-error]="property_type.invalid && property_type.touched">Prop.
+            Type</label>
+          <div class="col-6 input-div">
+            <select formControlName="Property_Type" class="custom-select custom-select-sm" required>
+              <option *ngFor="let property_type of property_types" [value]="property_type.code">{{
+                property_type.property_type }}</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <div class="col-4 offset-2 input-div form-control">
+            <div class="maxl">
+              <label class="radio inline">
+                <input type="radio" formControlName="Sale_Rent" value="Sale" (change)="showRentField()">
+                <span> Sale </span>
+              </label>
+              <label class="radio inline">
+                <input type="radio" formControlName="Sale_Rent" value="Rent" (change)="showRentField()">
+                <span>Rent </span>
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="form-group row mt-3 mb-3" >
+        <div class="col-3 input-div offset-2">
+          <button (click)="showDetails()" type="button" class="btn btn-success btn-sm btn-block" [disabled]="checkAddress()">{{ show == true ? 'Back' : 'Send' }}</button>
+        </div>
+      </div>
+
+
+      <div [hidden]="!show">
+      <div class="form-group row">
+        <label for="Listing_Type" class="col-2 col-form-label text-right" [class.has-error]="listing_type.invalid && listing_type.touched">Listing
+          Type</label>
+        <div class="col-4 input-div">
+          <select formControlName="Listing_Type" class="custom-select custom-select-sm" required (change)="displayAuction()">
+            <option *ngFor="let listing_type of listing_types" [value]="listing_type.code">{{
+              listing_type.listing_type }}</option>
+          </select>
+        </div>
+        <div class="col-6" *ngIf="!showRentField()" [hidden]="!showAuctionField">
+          <div class="row">
+            <label for="Auction_Date" class="col-4 offset-2 col-form-label text-right" [class.has-error]="auction_date.invalid && auction_date.touched"><small>Auction/TenderDate</small></label>
+            <div class="col-6 input-div">
+              <input type="text" formControlName="Auction_Date" class="form-control form-control-sm">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label for="Price_From" class="col-2 col-form-label text-right" [class.has-error]="price_from.invalid && price_from.touched">Price
+          From</label>
+        <div class="col-3 input-div">
+          <input type="text" formControlName="Price_From" class="form-control form-control-sm" />
+        </div>
+        <div class="col-6" *ngIf="!showRentField()" [hidden]="!showAuctionField">
+          <div class="row">
+            <label for="Auction_Time" class="col-4 offset-4 col-form-label text-right"><small>Auction/TenderTime</small></label>
+            <div class="col-4 input-div">
+              <input type="text" class="form-control form-control-sm" formControlName="Auction_Time" />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label for="Price_To" class="col-2 col-form-label text-right" [class.has-error]="price_to.invalid && price_to.touched">Price
+          To</label>
+        <div class="col-3 input-div">
+          <input type="text" class="form-control form-control-sm" formControlName="Price_To" />
+        </div>
+        <div class="col-7" *ngIf="!showRentField()" [hidden]="!showAuctionField">
+          <div class="row">
+            <label for="Auction_Location" class="col-3 col-form-label text-right" [class.has-error]="auction_location.invalid && auction_location.touched"><small>Auction
+                Venue</small></label>
+            <div class="col-9 input-div">
+              <input type="text" class="form-control form-control-sm" formControlName="Auction_Location" />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label for="Price_Description" class="col-2 col-form-label text-right" [class.has-error]="price_description.invalid && price_description.touched">Price
+          Desc.</label>
+        <div class="col-10 input-div">
+          <input type="text" class="form-control form-control-sm" formControlName="Price_Description" />
+        </div>
+      </div>
+
+      <div class="form-group row" *ngIf="showRentField()">
+        <label for="Rental_Period" class="col-2 col-form-label text-right" [class.has-error]="rental_period.invalid && rental_period.touched">Rental
+          Period </label>
+        <div class="col-4 input-div">
+          <select formControlName="Rental_Period" class="custom-select custom-select-sm">
+            <option value="W">Weekly</option>
+            <option value="F">Fortnightly</option>
+            <option value="M">Monthly</option>
+            <option value="A">Annually</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-group row mt-3">
+        <div class="col-6" *ngIf="showFieldAttribute('Bedrooms')">
+          <div class="row">
+            <div class="col-3 offset-4 input-div">
+              <input type="text" class="form-control form-control-sm" formControlName="Bedrooms" #input104/>
+            </div>
+            <label for="Bedrooms" class="col-5 col-form-label">Bedrooms</label>
+          </div>
+        </div>
+        <div class="col-6" *ngIf="showFieldAttribute('M2_Total_Floor')">
+          <div class="row">
+            <div class="col-3 offset-4 input-div">
+              <input type="text" class="form-control form-control-sm" formControlName="M2_Total_Floor" />
+            </div>
+            <label for="M2_Total_Floor" class="col-5 col-form-label">M2_Total_Floor</label>
+          </div>
+        </div>
+        <div class="col-6" *ngIf="showFieldAttribute('Land_Area')">
+          <div class="row">
+            <div class="col-3 offset-4 input-div">
+              <input type="text" class="form-control form-control-sm" formControlName="Land_Area" />
+            </div>
+            <select class="custom-select custom-select-sm col-3" formControlName="Land_Area_Metric">
+              <option value="M2"><small>M2</small></option>
+              <option value="HA"><small>HA</small></option>
+            </select>
+            <label for="Land_Area" class="label col-2 p-1"><small>LandArea</small></label>
+          </div>
+        </div>
+        <div class="col-6" *ngIf="showFieldAttribute('Ensuites')">
+          <div class="row">
+            <div class="col-3 offset-4 input-div">
+              <input type="text" class="form-control form-control-sm" formControlName="Ensuites" />
+            </div>
+            <label for="Ensuites" class="col-5 col-form-label">Ensuites</label>
+          </div>
+        </div>
+        <div class="col-6" *ngIf="showFieldAttribute('Toilets')">
+          <div class="row">
+            <div class="col-3 offset-4 input-div">
+              <input type="text" class="form-control form-control-sm" formControlName="Toilets" />
+            </div>
+            <label for="Toilets" class="col-5 col-form-label">Toilets</label>
+          </div>
+        </div>
+        <div class="col-6" *ngIf="showFieldAttribute('Dining_Rooms')">
+          <div class="row">
+            <div class="col-3 offset-4 input-div">
+              <input type="text" class="form-control form-control-sm" formControlName="Dining_Rooms" />
+            </div>
+            <label for="Dining_Rooms" class="col-5 col-form-label">Dining Rooms</label>
+          </div>
+        </div>
+        <div class="col-6" *ngIf="showFieldAttribute('Lounge_Dining')">
+          <div class="row">
+            <div class="col-3 offset-4 input-div">
+              <input type="text" class="form-control form-control-sm" formControlName="Lounge_Dining" />
+            </div>
+            <label for="Lounge_Dining" class="col-5 col-form-label">Lounge Dining</label>
+          </div>
+        </div>
+        <div class="col-6" *ngIf="showFieldAttribute('Other_Rooms')">
+          <div class="row">
+            <div class="col-3 offset-4 input-div">
+              <input type="text" class="form-control form-control-sm" formControlName="Other_Rooms" />
+            </div>
+            <label for="Other_Rooms" class="col-5 col-form-label">Other_Rooms</label>
+          </div>
+        </div>
+        <div class="col-6" *ngIf="showFieldAttribute('Lockup_Garages')">
+          <div class="row">
+            <div class="col-3 offset-4 input-div">
+              <input type="text" class="form-control form-control-sm" fromControlName="Lockup_Garages" />
+            </div>
+            <label for="Lockup_Garages" class="col-5 col-form-label">Lockup Garages</label>
+          </div>
+        </div>
+        <div class="col-6" *ngIf="showFieldAttribute('Year_Built')">
+          <div class="row">
+            <div class="col-3 offset-4 input-div">
+              <input type="text" class="form-control form-control-sm" formControlName="Year_Built" />
+            </div>
+            <label for="Year_Built" class="col-5 col-form-label">Year Built</label>
+          </div>
+        </div>
+        <div class="col-6" *ngIf="showFieldAttribute('Floor_Level')">
+          <div class="row">
+            <div class="col-3 offset-4 input-div">
+              <input type="text" class="form-control form-control-sm" formControlName="Year_Built" />
+            </div>
+            <label for="Year_Built" class="col-5 col-form-label">Year Built</label>
+          </div>
+        </div>
+        <div class="col-6" *ngIf="showFieldAttribute('Floor_Level')">
+          <div class="row">
+            <div class="col-3 offset-4 input-div">
+              <input type="text" class="form-control form-control-sm" formControlName="Floor_Level" />
+            </div>
+            <label for="Floor_Level" class="col-5 col-form-label">Floor Level</label>
+          </div>
+        </div>
+        <div class="col-6" *ngIf="showFieldAttribute('No_Of_Floor')">
+          <div class="row">
+            <div class="col-3 offset-4 input-div">
+              <input type="text" class="form-control form-control-sm" formControlName="No_Of_Floor" />
+            </div>
+            <label for="No_Of_Floor" class="col-5 col-form-label">No Of Floor</label>
+          </div>
+        </div>
+        <div class="col-6" *ngIf="showFieldAttribute('Bathrooms')">
+          <div class="row">
+            <div class="col-3 offset-4 input-div">
+              <input type="text" class="form-control form-control-sm" formControlName="Bathrooms" />
+            </div>
+            <label for="Bathrooms" class="col-5 col-form-label">Bathrooms</label>
+          </div>
+        </div>
+        <div class="col-6" *ngIf="showFieldAttribute('Lounge_Rooms')">
+          <div class="row">
+            <div class="col-3 offset-4 input-div">
+              <input type="text" class="form-control form-control-sm" formControlName="Lounge_Rooms" #input102/>
+            </div>
+            <label for="Lounge_Rooms" class="col-5 col-form-label">Lounge Rooms</label>
+          </div>
+        </div>
+        <div class="col-6" *ngIf="showFieldAttribute('No_Of_Study')">
+          <div class="row">
+            <div class="col-3 offset-4 input-div">
+              <input type="text" class="form-control form-control-sm" formControlName="No_Of_Study" />
+            </div>
+            <label for="No_Of_Study" class="col-5 col-form-label">No Of Study</label>
+          </div>
+        </div>
+        <div class="col-6" *ngIf="showFieldAttribute('No_Of_Tennis')">
+          <div class="row">
+            <div class="col-3 offset-4 input-div">
+              <input type="text" class="form-control form-control-sm" formControlName="No_Of_Tennis" />
+            </div>
+            <label for="No_Of_Tennis" class="col-5 col-form-label">No of Tennis</label>
+          </div>
+        </div>
+        <div class="col-6" *ngIf="showFieldAttribute('Family_Rumpus')">
+          <div class="row">
+            <div class="col-3 offset-4 input-div">
+              <input type="text" class="form-control form-control-sm" formControlName="Family_Rumpus" />
+            </div>
+            <label for="Family_Rumpus" class="col-5 col-form-label">Family Rumpus</label>
+          </div>
+        </div>
+        <div class="col-6" *ngIf="showFieldAttribute('Car_Spaces')">
+          <div class="row">
+            <div class="col-3 offset-4 input-div">
+              <input type="text" class="form-control form-control-sm" formControlName="Car_Spaces" />
+            </div>
+            <label for="Car_Spaces" class="col-5 col-form-label">Car Spaces</label>
+          </div>
+        </div>
+        <div class="col-6" *ngIf="showFieldAttribute('Year_Building')">
+          <div class="row">
+            <div class="col-3 offset-4 input-div">
+              <input type="text" class="form-control form-control-sm" formControlName="Year_Building" />
+            </div>
+            <label for="Year_Building" class="col-5 col-form-label">Year Building</label>
+          </div>
+        </div>
+        <div class="col-6" *ngIf="showFieldAttribute('Total_Floors')">
+          <div class="row">
+            <div class="col-3 offset-4 input-div">
+              <input type="text" class="form-control form-control-sm" formControlName="Total_Floors" />
+            </div>
+            <label for="Total_Floors" class="col-5 col-form-label">Total Floors</label>
+          </div>
+        </div>
+        <div class="col-6" *ngIf="showFieldAttribute('Construction_Type')">
+          <div class="row">
+            <div class="col-3 offset-4 input-div">
+              <input type="text" class="form-control form-control-sm" formControlName="Construction_Type" />
+            </div>
+            <label for="Construction_Type" class="col-5 col-form-label"><small>Construction Type</small></label>
+          </div>
+        </div>
+        <div class="col-6" *ngIf="showFieldAttribute('Materials_In_Roof')">
+          <div class="row">
+            <div class="col-3 offset-4 input-div">
+              <input type="text" class="form-control form-control-sm" formControlName="Materials_In_Roof" />
+            </div>
+            <label for="Materials_In_Roof" class="col-5 col-form-label">Materials In Roof</label>
+          </div>
+        </div>
+        <div class="col-6" *ngIf="showFieldAttribute('Type_Of_Scenic')">
+          <div class="row">
+            <div class="col-3 offset-4 input-div">
+              <input type="text" class="form-control form-control-sm" formControlName="Type_Of_Scenic" />
+            </div>
+            <label for="Type_Of_Scenic" class="col-5 col-form-label">Type Of Scenic</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group row mt-3">
+        <div class="col-4 offset-2 feature-div" *ngIf="showFieldFeature('Water_Frontage')">
+          <label class="container">Water Frontage
+            <input type="checkbox" formControlName="Water_Frontage">
+            <span class="checkmark"></span>
+          </label>
+        </div>
+        <div class="col-4 offset-2 feature-div" *ngIf="showFieldFeature('Scenic_View')">
+          <label class="container">Scenic View
+            <input type="checkbox" formControlName="Scenic_View">
+            <span class="checkmark"></span>
+          </label>
+        </div>
+        <div class="col-4 offset-2 feature-div" *ngIf="showFieldFeature('Air_Conditioned')">
+          <label class="container">Air Conditioned
+            <input type="checkbox" formControlName="Air_Conditioned" #input103>
+            <span class="checkmark"></span>
+          </label>
+        </div>
+        <div class="col-4 offset-2 feature-div" *ngIf="showFieldFeature('Heritage_Other')">
+          <label class="container">HeritageOtherClassification
+            <input type="checkbox" formControlName="Heritage_Other">
+            <span class="checkmark"></span>
+          </label>
+        </div>
+        <div class="col-4 offset-2 feature-div" *ngIf="showFieldFeature('Lift_Installed')">
+          <label class="container">Lift Installed
+            <input type="checkbox" formControlName="Lift_Installed">
+            <span class="checkmark"></span>
+          </label>
+        </div>
+        <div class="col-4 offset-2 feature-div" *ngIf="showFieldFeature('Access_Security')">
+          <label class="container">Access Security Installed
+            <input type="checkbox" formControlName="Access_Security">
+            <span class="checkmark"></span>
+          </label>
+        </div>
+        <div class="col-4 offset-2 feature-div" *ngIf="showFieldFeature('Close_To_Public')">
+          <label class="container">Close To Public Transport
+            <input type="checkbox" formControlName="Close_To_Public" #input97>
+            <span class="checkmark"></span>
+          </label>
+        </div>
+        <div class="col-4 offset-2 feature-div" *ngIf="showFieldFeature('Vendor_Will_Trade')">
+          <label class="container">Vendor Will Trade
+            <input type="checkbox" formControlName="Vendor_Will_Trade">
+            <span class="checkmark"></span>
+          </label>
+        </div>
+        <div class="col-4 offset-2 feature-div" *ngIf="showFieldFeature('Permanent_Water')">
+          <label class="container">Permanent Water
+            <input type="checkbox" formControlName="Permanent_Water">
+            <span class="checkmark"></span>
+          </label>
+        </div>
+        <div class="col-4 offset-2 feature-div" *ngIf="showFieldFeature('Permanent_Water')">
+          <label class="container">Permanent Water
+            <input type="checkbox" id="Permanent_Water" name="Permanent_Water" [(ngModel)]="form.Permanent_Water">
+            <span class="checkmark"></span>
+          </label>
+        </div>
+        <div class="col-4 offset-2 feature-div" *ngIf="showFieldFeature('Mains_Electricity')">
+          <label class="container">Mains Electricty Available
+            <input type="checkbox" formControlName="Mains_Electricity">
+            <span class="checkmark"></span>
+          </label>
+        </div>
+        <div class="col-4 offset-2 feature-div" *ngIf="showFieldFeature('River_Frontage')">
+          <label class="container">River Frontage
+            <input type="checkbox" formControlName="River_Frontage">
+            <span class="checkmark"></span>
+          </label>
+        </div>
+        <div class="col-4 offset-2 feature-div" *ngIf="showFieldFeature('Coast_Frontage')">
+          <label class="container">Coast Frontage
+            <input type="checkbox" formControlName="Coast_Frontage">
+            <span class="checkmark"></span>
+          </label>
+        </div>
+        <div class="col-4 offset-2 feature-div" *ngIf="showFieldFeature('Canal_Frontage')">
+          <label class="container">Canal Frontage
+            <input type="checkbox" formControlName="Canal_Frontage">
+            <span class="checkmark"></span>
+          </label>
+        </div>
+        <div class="col-4 offset-2 feature-div" *ngIf="showFieldFeature('Lake_Frontage')">
+          <label class="container">Lake Frontage
+            <input type="checkbox" formControlName="Lake_Frontage">
+            <span class="checkmark"></span>
+          </label>
+        </div>
+        <div class="col-4 offset-2 feature-div" *ngIf="showFieldFeature('Sealed_Roads')">
+          <label class="container">Sealed Roads to Property
+            <input type="checkbox" formControlName="Sealed_Roads">
+            <span class="checkmark"></span>
+          </label>
+        </div>
+        <div class="col-4 offset-2 feature-div" *ngIf="showFieldFeature('Open_Plan')">
+          <label class="container">Open Plan
+            <input type="checkbox" formControlName="Open_Plan" #input105>
+            <span class="checkmark"></span>
+          </label>
+        </div>
+        <div class="col-4 offset-2 feature-div" *ngIf="showFieldFeature('Fireplace')">
+          <label class="container">Fireplace
+            <input type="checkbox" formControlName="Fireplace">
+            <span class="checkmark"></span>
+          </label>
+        </div>
+        <div class="col-4 offset-2 feature-div" *ngIf="showFieldFeature('Polished_Floors')">
+          <label class="container">Polished Floors
+            <input type="checkbox" formControlName="Polished_Floors">
+            <span class="checkmark"></span>
+          </label>
+        </div>
+        <div class="col-4 offset-2 feature-div" *ngIf="showFieldFeature('Swimming_Pool')">
+          <label class="container">Swimming Pool
+            <input type="checkbox" formControlName="Swimming_Pool" #input98>
+            <span class="checkmark"></span>
+          </label>
+        </div>
+        <div class="col-4 offset-2 feature-div" *ngIf="showFieldFeature('Renovated')">
+          <label class="container">Renovated
+            <input type="checkbox" formControlName="Renovated">
+            <span class="checkmark"></span>
+          </label>
+        </div>
+        <div class="col-4 offset-2 feature-div" *ngIf="showFieldFeature('Double_Storey')">
+          <label class="container">Double Storey
+            <input type="checkbox" formControlName="Double_Storey">
+            <span class="checkmark"></span>
+          </label>
+        </div>
+        <div class="col-4 offset-2 feature-div" *ngIf="showFieldFeature('Ducted_Heating')">
+          <label class="container">Ducted Heating
+            <input type="checkbox" formControlName="Ducted_Heating">
+            <span class="checkmark"></span>
+          </label>
+        </div>
+        <div class="col-4 offset-2 feature-div" *ngIf="showFieldFeature('Granny_Flat')">
+          <label class="container">Granny Flat / Self Contained
+            <input type="checkbox" formControlName="Granny_Flat">
+            <span class="checkmark"></span>
+          </label>
+        </div>
+        <div class="col-4 offset-2 feature-div" *ngIf="showFieldFeature('Selling_Off')">
+          <label class="container">Selling Off The Plan
+            <input type="checkbox" formControlName="Selling_Off">
+            <span class="checkmark"></span>
+          </label>
+        </div>
+        <div class="col-4 offset-2 feature-div" *ngIf="showFieldFeature('Boat_Ramp')">
+          <label class="container">Boat, Ramp/Mooring/Space
+            <input type="checkbox" formControlName="Boat_Ramp">
+            <span class="checkmark"></span>
+          </label>
+        </div>
+        <div class="col-4 offset-2 feature-div" *ngIf="showFieldFeature('Ducted_Vaccuum')">
+          <label class="container">Ducted Vacuum
+            <input type="checkbox" formControlName="Ducted_Vaccuum">
+            <span class="checkmark"></span>
+          </label>
+        </div>
+        <div class="col-4 offset-2 feature-div" *ngIf="showFieldFeature('Town_Water')">
+          <label class="container">Town Water Available
+            <input type="checkbox" formControlName="Town_Water">
+            <span class="checkmark"></span>
+          </label>
+        </div>
+        <div class="col-4 offset-2 feature-div" *ngIf="showFieldFeature('Town_Sewerage')">
+          <label class="container">Town Sewerage Available
+            <input type="checkbox" formControlName="Town_Sewerage">
+            <span class="checkmark"></span>
+          </label>
+        </div>
+        <div class="col-4 offset-2 feature-div" *ngIf="showFieldFeature('Curb_Chanelling')">
+          <label class="container">Curb Channeling on Frontage
+            <input type="checkbox" formControlName="Curb_Chanelling">
+            <span class="checkmark"></span>
+          </label>
+        </div>
+        <div class="col-4 offset-2 feature-div" *ngIf="showFieldFeature('All_Weather_Access')">
+          <label class="container">All Weather Access to Land
+            <input type="checkbox" formControlName="All_Weather_Access">
+            <span class="checkmark"></span>
+          </label>
+        </div>
+        <div class="col-4 offset-2 feature-div" *ngIf="showFieldFeature('Land_Subject')">
+          <label class="container">Land Subject to Flooding
+            <input type="checkbox" formControlName="Land_Subject">
+            <span class="checkmark"></span>
+          </label>
+        </div>
+        <div class="col-4 offset-2 feature-div" *ngIf="showFieldFeature('Phone_Service')">
+          <label class="container">Phone Service Available
+            <input type="checkbox" formControlName="Phone_Service">
+            <span class="checkmark"></span>
+          </label>
+        </div>
+        <div class="col-4 offset-2 feature-div" *ngIf="showFieldFeature('Land_Can_Be')">
+          <label class="container">Land Can be Subdivided
+            <input type="checkbox" formControlName="Land_Can_Be">
+            <span class="checkmark"></span>
+          </label>
+        </div>
+        <div class="col-4 offset-2 feature-div" *ngIf="showFieldFeature('Trees_On_Land')">
+          <label class="container">Trees on Land
+            <input type="checkbox" formControlName="Trees_On_Land">
+            <span class="checkmark"></span>
+          </label>
+        </div>
+      </div>
+
+      <div class="form-group row mt-3">
+        <div class="offset-1 col-10 input-div">
+          <label for="Additional_Property" class="text-center d-block" (click)="showAdditionalField()">Additional Details</label>
+          <textarea class="form-control form-control-sm" rows="2" formControlName="Additional_Property" [hidden]="!showAdditional"></textarea>
+        </div>
+      </div>
+
+      <div class="mt-3 mb-5">
+        <div class="form-group row mt-5">
+          <div class="col input-div">
+            <label for="Ad_Size" class="text-center m-0">Ad Size</label>
+            <select formControlName="Ad_Size" class="custom-select custom-select-sm" #input101 (change)="generate()">
+              <option value=""> -- </option>
+              <option value="CLASSIFIEDS">Classifieds</option>
+              <option value="SMALL">Small</option>
+              <option value="1/8 PAGE">1/8 Page</option>
+              <option value="1/4 PAGE">1/4 Page</option>
+              <option value="1/3 PAGE">1/3 Page</option>
+              <option value="1/2 PAGE">1/2 Page</option>
+              <option value="3/4 PAGE">3/4 Page</option>
+              <option value="FULL PAGE">Full Page</option>
+              <option value="DOUBLE PAGE">Double Page</option>
+            </select>
+          </div>
+
+          <div class="col input-div">
+            <label for="Ad_Photo_Type" class="text-center m-0">Ad Photo Type</label>
+            <select formControlName="Ad_Photo_Type" class="custom-select custom-select-sm" (change)="generate2()">
+              <option value="COLOUR">Colour</option>
+              <option value="B & W">B & W</option>
+              <option value="NO PHOTO">No Photo</option>
+            </select>
+          </div>
+
+          <div class="col input-div">
+            <label for="Ad_Photo_Count" class="text-center m-0">Ad Photo Count</label>
+            <select formControlName="Ad_Photo_Count" class="custom-select custom-select-sm">
+              <option value="SINGLE">Single</option>
+              <option value="MULTIPLE">Multiple</option>
+              <option value="NOT APPLICABLE">Not Applicable</option>
+            </select>
+          </div>
+
+          <div class="col input-div">
+            <label for="Ad_Section" class="text-center m-0">Ad Section</label>
+            <select formControlName="Ad_Section" class="custom-select custom-select-sm">
+                <option value=""> -- </option>
+              <option value="FRONT">Front</option>
+              <option value="MIDDLE">Middle</option>
+              <option value="BACK">Back</option>
+              <option value="CLASSIFIEDS">Classifieds</option>
+            </select>
+          </div>
+
+          <div class="col input-div">
+            <label for="Ad_Exclusive" class="text-center m-0">Ad Exclusive Agent</label>
+            <select formControlName="Ad_Exclusive" class="custom-select custom-select-sm">
+              <option value="YES">Yes</option>
+              <option value="NO">No</option>
+              <option value="UNKNOWN">Unknown</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div formArrayName="agents" *ngFor="let agent of propertyForm.get('agents').controls; let i = index;">
+        <div [formGroupName]="i">
+          <div class="form-group row">
+            <div class="col input-div">
+              <input type="text" class="form-control form-control-sm" formControlName="Agent_Contact" placeholder="Contact No." #input96>
+            </div>
+            <div class="col-5 input-div">
+              <input type="text" class="form-control form-control-sm" formControlName="Agency_Name" placeholder="Agency Name">
+            </div>
+            <div class="col input-div">
+              <input type="text" class="form-control form-control-sm" formControlName="Agent_Firstname" placeholder="Firstname">
+            </div>
+            <div class="col input-div">
+              <input type="text" class="form-control form-control-sm" formControlName="Agent_Surname" placeholder="Surname">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <button (click)="addAgent()" type="button" class="btn btn-primary btn-sm">Add Agent</button>
+
+      <div class="form-group row mt-3">
+        <div class="col-6 input-div offset-2">
+          <button type="submit" class="btn btn-primary btn-sm btn-block" [disabled]="propertyForm.invalid">Submit</button>
+        </div>
+      </div>
+
+    </div> <!--div end of show -->
+
+     <pre>
+                {{ propertyForm.value | json}}
+            </pre>
+
+
+    </form>
+  </div>
+</div>

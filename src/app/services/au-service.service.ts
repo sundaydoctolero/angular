@@ -18,4 +18,8 @@ export class AuServiceService {
     return this.http.post(this.baseUrl+'storeProperty',data);
   }
 
+  getProperties(){
+    return this.http.get(this.baseUrl+'properties');
+  }
+
 }

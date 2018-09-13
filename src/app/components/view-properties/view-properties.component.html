@@ -2,7 +2,9 @@
   <div class="card text-white bg-dark" *ngFor="let property of properties; let count = index">
     <div class="card-header row">
       <div class="col">
-          {{ property.Street_No + " " + property.Street_Name + " " + property.Street_Extension + " " + property.Suburb }}
+          <span>
+              {{ property.Street_No + " " + property.Street_Name + " " + property.Street_Extension + " " + property.Suburb }}
+          </span>
       </div>
       <div class="col">
           <div class="input-group-append float-right">
